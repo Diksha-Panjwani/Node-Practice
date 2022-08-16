@@ -1,34 +1,35 @@
-var express = require('express')
-var app = express()
-var bodyParser = require('body-parser')
-var http = require('http').Server(app)
+var express = require('express');
+var libraryServer = express();
 
-app.use(express.json(), function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
-    res.setHeader('Access-Control-Allow-Credentials', true)
-    next()
-})
-var books = [
-    {"name": "Diksha"}
-]
+const PORT = 3000;
 
-app.use(express.static(__dirname))
-app.use(bodyParser.json)
-app.use(bodyParser.urlencoded({extended: false}))
-
-app.post('/books', (req,res) => {
-    var booksArray = res.body
-    booksArray.array.forEach(book => {
-        books.push(book)
-    });
+// express config
+libraryServer.use(express.json(), function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
 })
 
-app.get('/books', (req,res) => {
-    res.send('hello')
-})
+libraryServer.post('/books', (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    var booksArray = [];
+    var books = [
+        {
+            "name": "Diksha"
+        }
+    ];
 
-app.listen(300, () => {
-    console.log("this is my server")
-})
+    booksArray = books.concat(req.body);
+    return res.json(booksArray);
+});
+
+libraryServer.get('/books', (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.send('Hello');
+});
+
+libraryServer.listen(PORT, () => {
+    console.log("Server is running on Port:" + PORT);
+});
