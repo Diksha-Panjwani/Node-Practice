@@ -4,13 +4,17 @@ var libraryServer = express();
 const PORT = 3000;
 
 // express config
-libraryServer.use(express.json(), function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
-})
+libraryServer.use(
+    express.json(),
+    express.static("public"),
+    function (req, res, next) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+        res.setHeader('Access-Control-Allow-Credentials', true);
+        next();
+    }
+);
 
 libraryServer.post('/books', (req, res) => {
     res.set('Access-Control-Allow-Origin', '*');
