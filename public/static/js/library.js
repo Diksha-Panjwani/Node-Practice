@@ -5,8 +5,8 @@ $(()=> {
 
 function getBooks() {
     console.log("hii")
-    $.get('https://localhost:300/books', (data) => {
-        console.log("hii")
+    $.get('/books', (data) => {
+        console.log("hii123")
         //console.log(data);
     })
 }
